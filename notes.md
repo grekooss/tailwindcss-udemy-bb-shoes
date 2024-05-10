@@ -1,0 +1,28 @@
+# VITE
+
+instrukcja framework Vite na stronie tailwindcsss
+https://tailwindcss.com/docs/guides/vite
+
+- zmiana main na index
+- export default na export i pozniej import {App}
+
+---
+
+- zmiana portu:
+
+```
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 3000,
+  },
+});
+```
+
+- npm i -D prettier
+- npm i -D prettier-plugin-tailwindcss
+- npm i -D vite-plugin-svgr
