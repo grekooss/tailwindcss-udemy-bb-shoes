@@ -1,4 +1,6 @@
-# VITE
+# Instalacja
+
+## VITE
 
 instrukcja framework Vite na stronie tailwindcsss
 https://tailwindcss.com/docs/guides/vite
@@ -9,6 +11,8 @@ https://tailwindcss.com/docs/guides/vite
 ---
 
 - zmiana portu:
+
+vite.config.js
 
 ```
 import { defineConfig } from 'vite';
@@ -25,4 +29,11 @@ export default defineConfig({
 
 - npm i -D prettier
 - npm i -D prettier-plugin-tailwindcss
+  https://tailwindcss.com/blog/automatic-class-sorting-with-prettier
+  dodac plik .prettierrc
 - npm i -D vite-plugin-svgr
+- npm i react-icons
+
+# Budowanie
+
+w katalogu src/components/ tworzymy Nav.jsx
