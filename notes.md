@@ -14,9 +14,9 @@ https://tailwindcss.com/docs/guides/vite
 
 vite.config.js
 
-```
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+```jsx
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -31,7 +31,7 @@ export default defineConfig({
 - npm i -D prettier-plugin-tailwindcss
   https://tailwindcss.com/blog/automatic-class-sorting-with-prettier
   dodac plik .prettierrc
-  ```
+  ```jsx
   {
   "plugins": ["prettier-plugin-tailwindcss"]
   }
@@ -49,10 +49,10 @@ w katalogu src/components/ tworzymy Nav.jsx
 
 - import svg jako React Component w Vite
   i opakowac w a
-  ```
+  ```jsx
   import NikeLogo from "../assets/nike-logo.svg?react";
   ```
-  ```
+  ```html
   <a href="#">
     <NikeLogo className="h-20 w-20" />
   </a>
@@ -63,33 +63,35 @@ w katalogu src/components/ tworzymy Nav.jsx
 
 - import hamburger button
 
-  ```
+  ```jsx
   import { RxHamburgerMenu } from "react-icons/rx";
   ```
 
-  ```
-    <button>
-        <RxHamburgerMenu size={25} />
-    </button>
+  ```html
+  <button>
+    <RxHamburgerMenu size="{25}" />
+  </button>
   ```
 
   nadajemy size
 
   na button nadajemy wlasciwosci ring na klik
 
-  ```
-  <button className="hover:bg-grey-100 rounded-lg  p-2 focus:ring-2 focus:ring-gray-200">
-      <RxHamburgerMenu size={25} />
-  </button
+  ```html
+  <button
+    className="hover:bg-grey-100 rounded-lg  p-2 focus:ring-2 focus:ring-gray-200"
+  >
+    <RxHamburgerMenu size="{25}" />
+  </button>
   ```
 
 na calym nav nadajemy flex - uloza sie w wierszu, justify between - uloza sie po bokach, items-center wyrownaja do lini srodkowej w poziomie
 
-```
-<nav className="flex items-center justify-between">
+```html
+<nav className="flex items-center justify-between"></nav>
 ```
 
-a jak pozniej dolozymy flex-wrap to MENU LIST pojdzie do nowej linii bo ma w-full i bedzie samo
+a jak pozniej dolozymy **flex-wrap** to MENU LIST pojdzie do nowej linii bo ma **w-full** i bedzie samo
 
 ---
 
@@ -97,7 +99,7 @@ a jak pozniej dolozymy flex-wrap to MENU LIST pojdzie do nowej linii bo ma w-ful
 
 w divie w App nadajemy padding calej apki
 
-```
+```jsx
 import { Nav } from "./comonents/Nav";
 
 export function App() {
@@ -119,7 +121,7 @@ wiekszy na super large screen
 
 tworzymy tablice ROUTES:
 
-```
+```jsx
 const ROUTES = ["Home", "About", "Services", "Pricing", "Contact"];
 ```
 
@@ -129,23 +131,21 @@ const ROUTES = ["Home", "About", "Services", "Pricing", "Contact"];
 - kazde z li dostaje **cursor-pointer rounded px-3 py-2** i wstrzykujemy \`{}` calosc jako JS bo chcemy if (conditional ?: ) aby pierwszy i===0 dostal **"bg-blue-500 text-white lg:bg-transparent lg:text-blue-500" a pozostale "hover:bg-gray-100"**
 -
 
-```
-      <div
-        className={`${!IsMobileMenuShown && "hidden"} w-full lg:block lg:w-auto`}
-      >
-        <ul className="flex flex-col rounded-lg border-gray-100 bg-gray-50 p-4 text-lg lg:flex-row lg:space-x-8 lg:border-none lg:bg-transparent">
-          {ROUTES.map((route, i) => {
-            return (
-              <li
-                className={`cursor-pointer rounded px-3 py-2 ${i === 0 ? "bg-blue-500 text-white lg:bg-transparent lg:text-blue-500" : "hover:bg-gray-100"}`}
-                key={route}
-              >
-                {route}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+```jsx
+<div className={`${!IsMobileMenuShown && "hidden"} w-full lg:block lg:w-auto`}>
+  <ul className="flex flex-col rounded-lg border-gray-100 bg-gray-50 p-4 text-lg lg:flex-row lg:space-x-8 lg:border-none lg:bg-transparent">
+    {ROUTES.map((route, i) => {
+      return (
+        <li
+          className={`cursor-pointer rounded px-3 py-2 ${i === 0 ? "bg-blue-500 text-white lg:bg-transparent lg:text-blue-500" : "hover:bg-gray-100"}`}
+          key={route}
+        >
+          {route}
+        </li>
+      );
+    })}
+  </ul>
+</div>
 ```
 
 ### Cart button
@@ -153,9 +153,9 @@ const ROUTES = ["Home", "About", "Services", "Pricing", "Contact"];
 - uzywamy pluginu do vsc "react icons auto import"
 - TbShoppingBag opakowujemy w diva i nadajemy mu **h-12 w-12 rounded-full bg-white shadow-md** - stworzy sie okrag z cieniem ale nie wycentrowany jest ikonka w stosunku do diva wiec nadajemy **flex-center** na div (tworzymy je w index.css)
 
-```
 index.css
 
+```css
 @layer utilities {
   .flex-center {
     @apply flex items-center justify-center;
@@ -165,20 +165,20 @@ index.css
 
 - chcemy aby cart na mobile byl w lewym dolnym rogu a na lg zamiast hamburgera wiec opakowujemy to w jeszcze jednego diva i nadajemy **fixed bottom-4 left-4 lg:static** static przywraca document flow (regular default position) czyli bedzie po menu list ale pozniej na lg pojdzie w miejsce hamburgera (na lg menu zniknie i pojawi sie w srodku nav z wszystkimi mozliwosciami oraz zniknie hamburger)
 
-```
-      <div className="fixed bottom-4 left-4 lg:static">
-        <div className="flex-center h-12 w-12 rounded-full bg-white shadow-md">
-          <TbShoppingBag />
-        </div>
-      </div>
+```html
+<div className="fixed bottom-4 left-4 lg:static">
+  <div className="flex-center h-12 w-12 rounded-full bg-white shadow-md">
+    <TbShoppingBag />
+  </div>
+</div>
 ```
 
 hamburger znika na lg
 
-```
-  <button className="lg:hidden">
-    <RxHamburgerMenu size={25} />
-  </button>
+```html
+<button className="lg:hidden">
+  <RxHamburgerMenu size="{25}" />
+</button>
 ```
 
 menu list na lg w rzedzie za pomoca flex-row flex-col \
@@ -190,14 +190,14 @@ a na li **lg:bg-transparent lg:text-blue-500**\
 
 chcemy aby menu pokazywalo sie poprzez klikniecie na hamburger nadajemy useState()
 
-```
-const [IsMobileMenuShown, setIsMobileMenuShown] = useState(false); //defauletowo nie wyswietlane false
+```jsx
+const [IsMobileMenuShown, setIsMobileMenuShown] = useState(false); //defaultowo wyswietlane false
 ```
 
 na lg ma byc zawsze wyswietlane wiec **lg-block** na divie MenuList a mobile **hidden** i to mozemy togglowac
 wiec div idzie w backtickie
 
-```
+```jsx
       <div
         className={`${!IsMobileMenuShown && "hidden"} w-full lg:block lg:w-auto`}  // IsMobileMenuShown ? "" : "hidden"
       >
@@ -205,7 +205,7 @@ wiec div idzie w backtickie
 
 na hamburgerze jeszcze funkcja onClick:
 
-```
+```jsx
       <button
         onClick={() => setIsMobileMenuShown(!IsMobileMenuShown)}
       >
@@ -243,19 +243,21 @@ na hamburgerze jeszcze funkcja onClick:
 
 dodajemy **img src={nike1}** w diva image
 
-```
+```jsx
 import nike1 from "../assets/n1-min.png";
 
-      {/* Image */}
-      <div className="flex-1">
-        <img src={nike1} />
-      </div>
+{
+  /* Image */
+}
+<div className="flex-1">
+  <img src={nike1} />
+</div>;
 ```
 
 na lg chcemy zeby zaszedl na MenuList - robimy to poprzez ujemny margin na divie
 
-```
-<div className="flex-1 lg:-mt-32">
+```html
+<div className="flex-1 lg:-mt-32"></div>
 ```
 
 teraz nam przykrywa MenuList aby przeniesc MenuList na wierz uzywamy z-index **z-10** na calym Nav
@@ -265,10 +267,12 @@ GRADIENT background pod img:
 
 - opakowac img w diva:
 
-```
-        <div className="bg-gradient-to-br from-[#F637CF] from-5% via-[#E3D876] via-40% to-[#4DD4C6]">
-          <img src={nike1} />
-        </div>
+```html
+<div
+  className="bg-gradient-to-br from-[#F637CF] from-5% via-[#E3D876] via-40% to-[#4DD4C6]"
+>
+  <img src="{nike1}" />
+</div>
 ```
 
 dodajemy tu tez **h-full** bo przy zmniejszaniu gradient z butem sie zmniejszaly takze
@@ -286,13 +290,13 @@ z https://fontsource.org/fonts/nunito-sans/install \
 
 w index.jsx
 
-```
-import '@fontsource-variable/nunito-sans';
+```jsx
+import "@fontsource-variable/nunito-sans";
 ```
 
 w index.css
 
-```
+```css
 @layer base {
   body {
     font-family: "Nunito Sans Variable", sans-serif;
@@ -304,8 +308,104 @@ w index.css
 
 - dodajemy warunkowy kolor bialy na li na lg
 
-```
+```jsx
  ${(i === 3 || i === 4) && "lg:text-white"}`
 ```
 
 dodajemy tez na li **lg:hover:bg-transparent lg:hover:text-blue-500**
+
+## SELECT.jsx (rozwijany QTY i SIZE)
+
+tworzymy plik constant.js z tablicami:
+
+```js
+export const SIZES = [40, 41, 42, 43, 44];
+export const QTYS = [1, 2, 3, 4];
+```
+
+i przekazujemy to jako props:
+
+```html
+<Select title={"QTY"} options={QTYS} />
+<Select title={"SIZE"} options={SIZES} />
+```
+
+i tworzymy component Select.jsx a w nim mapujemy po tablicy options przekazywanej przez props:
+
+```jsx
+export function Select({ title, options }) {
+  return (
+    <select>
+      {options.map((option) => (
+        <option key={option}>{option}</option>
+      ))}
+    </select>
+  );
+}
+```
+
+mozna wylaczyc w eslincie problem prop-types:
+.eslintrc.cjs
+
+```css
+  rules: {
+    "react/jsx-no-target-blank": "off",
+    "react-refresh/only-export-components": [
+      "warn",
+      { allowConstantExport: true },
+    ],
+    "react/prop-types": "off",
+  },
+```
+
+aby wyswietlic QTY i SIZE w liscie rozwijanej dodajemy na poczatku option i value="" a w mapowanych value={option}
+
+```jsx
+<select>
+  <option value="">{title}</option>
+  {options.map((option) => (
+    <option value={option} key={option}>
+      {option}
+    </option>
+  ))}
+</select>
+```
+
+lecz aby nie mozna go bylo wybrac ukrywamy jego widocznosc a select wprowadzamy defaultValue="" (empty)
+
+```jsx
+  <select defaultValue="">
+      <option value="" disabled hidden>
+        {title}
+      </option>
+```
+
+stylujemy calego select:
+
+```jsx
+<select
+  defaultValue=""
+  className="w-24 appearance-none border border-gray-300 p-4"
+>
+```
+
+obydwa Selecty + diva z cena opakowujemy w diva i nadajemy **flex** aby ustawily sie w rzedzie i odstep miedzy nimi **space-x-6**
+
+```jsx
+<div className="flex space-x-6">
+  <div className="text-3xl font-extrabold md:text-6xl">100 $</div>
+  <Select title={"QTY"} options={QTYS} />
+  <Select title={"SIZE"} options={SIZES} />
+</div>
+```
+
+dodajemy tez ikone rozwijania listy poprzez dodanie dodanie div po select ale ustawia sie pod selectem dlatego nadajemy jej **absolute** a na divie conteiner select **relative** warto tez wyzerowac **inset-y-0 lub inset-x-0** oraz **flex-center right-o pr-3**
+
+```jsx
+<div className="relative">
+  ...
+  <div className="flex-center absolute inset-y-0 right-0 pr-3">
+    <IoIosArrowDown />
+  </div>
+</div>
+```
