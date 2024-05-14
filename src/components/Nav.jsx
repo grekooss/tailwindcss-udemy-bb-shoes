@@ -2,7 +2,6 @@ import { TbShoppingBag } from "react-icons/tb";
 import NikeLogo from "../assets/nike-logo.svg?react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useState } from "react";
-import { RiSafariFill } from "react-icons/ri";
 
 const ROUTES = ["Home", "About", "Services", "Pricing", "Contact"];
 
@@ -27,7 +26,7 @@ export function Nav() {
       <div
         className={`${!IsMobileMenuShown && "hidden"} w-full lg:block lg:w-auto`}
       >
-        <ul className="flex flex-col rounded-lg border-gray-100 bg-gray-50 p-4 text-lg lg:flex-row lg:space-x-8 lg:border-none lg:bg-transparent">
+        <ul className="flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 text-lg lg:flex-row lg:space-x-8 lg:border-none lg:bg-transparent">
           {ROUTES.map((route, i) => {
             return (
               <li
