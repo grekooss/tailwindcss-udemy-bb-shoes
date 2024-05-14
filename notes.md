@@ -41,7 +41,7 @@ export default defineConfig({
 
 # Budowanie
 
-## Nav
+## Nav.jsx
 
 w katalogu src/components/ tworzymy Nav.jsx
 
@@ -215,7 +215,7 @@ na hamburgerze jeszcze funkcja onClick:
 
 ---
 
-## ShoeDetail
+## ShoeDetail.jsx
 
 - dwa divy (image i description) opakowane w diva container zajmuja dokladnie po polowie wiec uzywamy **flex-1** na obydwoch divach
 - na divie container robimy **flex flex-col lg:flex-row-reverse**
@@ -252,6 +252,60 @@ import nike1 from "../assets/n1-min.png";
       </div>
 ```
 
+na lg chcemy zeby zaszedl na MenuList - robimy to poprzez ujemny margin na divie
+
+```
+<div className="flex-1 lg:-mt-32">
+```
+
+teraz nam przykrywa MenuList aby przeniesc MenuList na wierz uzywamy z-index **z-10** na calym Nav
+ale samo nie dziala bo jest ten div static domyslnie i trzeba zmienic na relative
+
+GRADIENT background pod img:
+
+- opakowac img w diva:
+
+```
+        <div className="bg-gradient-to-br from-[#F637CF] from-5% via-[#E3D876] via-40% to-[#4DD4C6]">
+          <img src={nike1} />
+        </div>
+```
+
+dodajemy tu tez **h-full** bo przy zmniejszaniu gradient z butem sie zmniejszaly takze
+oraz wysrodkowujemy img poprzez **flex-center** na divie
+
 ---
 
 dodajemy odstep miedzy Image a Descrition na divie container - space-y-4
+
+## FONT
+
+z https://fontsource.org/fonts/nunito-sans/install \
+
+- npm install @fontsource-variable/nunito-sans
+
+w index.jsx
+
+```
+import '@fontsource-variable/nunito-sans';
+```
+
+w index.css
+
+```
+@layer base {
+  body {
+    font-family: "Nunito Sans Variable", sans-serif;
+  }
+}
+```
+
+## NAV.jsx
+
+- dodajemy warunkowy kolor bialy na li na lg
+
+```
+ ${(i === 3 || i === 4) && "lg:text-white"}`
+```
+
+dodajemy tez na li **lg:hover:bg-transparent lg:hover:text-blue-500**
