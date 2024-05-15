@@ -409,3 +409,52 @@ dodajemy tez ikone rozwijania listy poprzez dodanie dodanie div po select ale us
   </div>
 </div>
 ```
+
+## Animacje
+
+mamy kilka wbudowanych **animate-.....**
+a poprzez plik tailwind.config.js mozemy stworzyc swoje
+podajemy w keyframes: co w jakiej klatce ma byc zrobione otaczamy jakas nazwa (np. wiggle) a pozniej w sekcji animation: powolujemy sie na ta nazwe a nazwa tej animacji jest dostepna w tailwind
+
+```jsx
+export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {
+      keyframes: {
+        wiggle: {
+          "0%, 100%": { transform: "rotate(-3deg)" },
+          "50%": { transform: "rotate(3deg)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+      },
+      animation: {
+        wiggle: "wiggle 1s ease-in-out infinite",
+        float: "float 4s ease-in-out infinite",
+      },
+    },
+  },
+  plugins: [],
+};
+```
+
+```jsx
+<div className="flex-center h-full bg-gradient-to-br from-[#F637CF] from-5% via-[#E3D876] via-40% to-[#4DD4C6]">
+  <img className="animate-float" src={nike1} />
+</div>
+```
+
+na buttonach inaczej (nie jest to typowa animacja):
+dodajemy np. **transition active:scale-75** i mona to wrzucic do index.css
+
+```css
+@layer utilities {
+  //...
+  .btn-press-anim {
+    @apply transition active:scale-75;
+  }
+}
+```
