@@ -448,7 +448,8 @@ export default {
 ```
 
 na buttonach inaczej (nie jest to typowa animacja):
-dodajemy np. **transition active:scale-75** i mona to wrzucic do index.css
+dodajemy np. **transition active:scale-75** i mozna to wrzucic do index.css
+transition dlatego aby nie bylo takiego przeskoku tylko plynnie
 
 ```css
 @layer utilities {
@@ -458,3 +459,56 @@ dodajemy np. **transition active:scale-75** i mona to wrzucic do index.css
   }
 }
 ```
+
+## INFO.jsx (Card)
+
+tworzymy ~JSON w constant.js z okreslonymi butami
+
+```jsx
+export const SHOE_LIST = [
+  {
+    id: 1,
+    src: nike1,
+    className: "bg-[#EEFFA4]",
+    title: "Nike Air Max 270",
+    description:
+      "The Nike Air Max 270 is a lifestyle shoe that's sure to turn heads with its vibrant color gradient.",
+    price: 160,
+  },
+];
+```
+
+a nastepnie Info.jsx (Card):
+
+```jsx
+  return (
+    <div className="animate-fadeIn p-10 xl:px-24">
+      {/* <Nav />
+      <ShoeDetail /> */}
+      <Info item={SHOE_LIST[0]} />
+    </div>
+  );
+}
+```
+
+```jsx
+export function Info({ item }) {
+  return (
+    <div
+      className={`${item.className} max-w-xl transform cursor-pointer transition hover:scale-105`}
+    >
+      <div className="p-8">
+        <div className="text-2xl font-bold">{item.title}</div>
+        <div className="mt-10 font-semibold underline underline-offset-4">
+          SHOP NOW+
+        </div>
+      </div>
+      <img className="absolute left-[40%] top-0 h-40 w-56" src={item.src} />
+    </div>
+  );
+}
+```
+
+stylujemy text oraz
+img dajemy **absolute** i okreslona pozycje
+a na divie conteiner aby sie dobrze na hover skalowalo musi byc dodany **transform transition hover:scale-105** bo jest kilka rzeczy skalowane
