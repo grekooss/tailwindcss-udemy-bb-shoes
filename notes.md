@@ -562,3 +562,20 @@ i tworzymy do tego grid **grid grid-cols-1 gap-y-24**
 
 na md **gap-x-6 md:grid-cols-2**
 a na xl **justify-between xl:grid-cols-[repeat(3,25%)]**
+
+## Sidebar.jsx
+
+tworzymy komponent Sidebar:
+
+```jsx
+export function Sidebar({ children }) {
+  return (
+    <div className="fixed left-0 top-0 z-50 h-full w-full bg-white">
+      <button>X</button>
+      {children}
+    </div>
+  );
+}
+```
+
+**fixed left-0 top-0 z-50 h-full w-full bg-white** takie stylowanie diva da nam bialy na cala strone nad wszystkim
