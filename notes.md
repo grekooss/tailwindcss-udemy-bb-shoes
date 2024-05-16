@@ -400,11 +400,12 @@ obydwa Selecty + diva z cena opakowujemy w diva i nadajemy **flex** aby ustawily
 ```
 
 dodajemy tez ikone rozwijania listy poprzez dodanie dodanie div po select ale ustawia sie pod selectem dlatego nadajemy jej **absolute** a na divie conteiner select **relative** warto tez wyzerowac **inset-y-0 lub inset-x-0** oraz **flex-center right-o pr-3**
+Niestety klikanie na ikonke nie rozwija wiec trzeba dodac jeszcze **pointer-events-none**
 
 ```jsx
 <div className="relative">
   ...
-  <div className="flex-center absolute inset-y-0 right-0 pr-3">
+  <div className="flex-center pointer-events-none absolute inset-y-0 right-0 pr-3">
     <IoIosArrowDown />
   </div>
 </div>
@@ -512,3 +513,52 @@ export function Info({ item }) {
 stylujemy text oraz
 img dajemy **absolute** i okreslona pozycje
 a na divie conteiner aby sie dobrze na hover skalowalo musi byc dodany **transform transition hover:scale-105** bo jest kilka rzeczy skalowane
+
+## NewArrivalsSection.jsx
+
+tworzymy i stylujemy:
+
+```jsx
+export function NewArrivalsSection({ items }) {
+  return (
+    <div className="mt-20">
+      <div className="flex-center">
+        <div className="bg-[url('./assets/lines.png')] bg-center text-4xl font-extrabold">
+          NEW ARRIVALS
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+aby dodac zdjecie jako tlo mozemy dodac w ten sposob **bg-[url('./assets/lines.png')]**
+zaby je wszystkie Info wyswietlic mapujemy po props item gdzie przesylamy tablice z JSONami
+
+```jsx
+export function NewArrivalsSection({ items }) {
+  return (
+    <div className="flex-center mt-20">
+      ...
+      <div>
+        {items.map((item) => (
+          <Info key={item.id} item={item} />
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+i tworzymy do tego grid **grid grid-cols-1 gap-y-24**
+
+```jsx
+<div className="mt-10 grid grid-cols-1 gap-y-24">
+  {items.map((item) => (
+    <Info key={item.id} item={item} />
+  ))}
+</div>
+```
+
+na md **gap-x-6 md:grid-cols-2**
+a na xl **justify-between xl:grid-cols-[repeat(3,25%)]**
