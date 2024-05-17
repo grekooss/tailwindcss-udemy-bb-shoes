@@ -5,8 +5,8 @@ import { useState } from "react";
 
 const ROUTES = ["Home", "About", "Services", "Pricing", "Contact"];
 
-export function Nav() {
-  const [IsMobileMenuShown, setIsMobileMenuShown] = useState(false);
+export function Nav({ onClickShoppingBtn }) {
+  const [isMobileMenuShown, setIsMobileMenuShown] = useState(false);
   return (
     <nav className="relative z-10 flex flex-wrap items-center justify-between">
       {/* Logo */}
@@ -16,7 +16,7 @@ export function Nav() {
 
       {/* Hamburger Button */}
       <button
-        onClick={() => setIsMobileMenuShown(!IsMobileMenuShown)}
+        onClick={() => setIsMobileMenuShown(!isMobileMenuShown)}
         className="hover:bg-grey-100 rounded-lg  p-2 focus:ring-2 focus:ring-gray-200 lg:hidden"
       >
         <RxHamburgerMenu size={25} />
@@ -24,7 +24,7 @@ export function Nav() {
 
       {/* Menu List */}
       <div
-        className={`${!IsMobileMenuShown && "hidden"} w-full lg:block lg:w-auto`}
+        className={`${!isMobileMenuShown && "hidden"} w-full lg:block lg:w-auto`}
       >
         <ul className="flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 text-lg lg:flex-row lg:space-x-8 lg:border-none lg:bg-transparent">
           {ROUTES.map((route, i) => {
@@ -41,7 +41,10 @@ export function Nav() {
       </div>
 
       {/* Cart Button */}
-      <div className="btn-press-anim fixed bottom-4 left-4 lg:static lg:mr-8">
+      <div
+        onClick={onClickShoppingBtn}
+        className="btn-press-anim fixed bottom-4 left-4 lg:static lg:mr-8"
+      >
         <div className="flex-center h-12 w-12 cursor-pointer rounded-full bg-white shadow-md">
           <TbShoppingBag />
         </div>

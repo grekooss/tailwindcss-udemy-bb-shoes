@@ -571,11 +571,143 @@ tworzymy komponent Sidebar:
 export function Sidebar({ children }) {
   return (
     <div className="fixed left-0 top-0 z-50 h-full w-full bg-white">
-      <button>X</button>
+      <button className="absolute right-4 top-4 p-2 font-bold text-black">
+        X
+      </button>
       {children}
     </div>
   );
 }
 ```
 
-**fixed left-0 top-0 z-50 h-full w-full bg-white** takie stylowanie diva da nam bialy na cala strone nad wszystkim
+- **fixed left-0 top-0 z-50 h-full w-full bg-white** takie stylowanie diva da nam bialy na cala strone nad wszystkim oraz pozycjonujemy button X
+- nastepnie wprowadzamy "animacje" wysuwania/chowania sidebara:
+  **{`... transform transition duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"}`}**
+
+```jsx
+export function Sidebar({ children, isOpen }) {
+  return (
+    <div
+      className={`fixed right-0 top-0 z-50 h-full w-full transform bg-white transition duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+    >
+      <button className="absolute right-4 top-4 p-2 font-bold text-black">
+        X
+      </button>
+      {children}
+    </div>
+  );
+}
+```
+
+#### Wysuwanie/chowanie (REACT):
+
+Wysuwanie
+
+- tworzymy useState w App.jsx
+
+```jsx
+const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+```
+
+- a App.jsx tworzymy props onClickShoppingBtn w ktorym wywolujemy funkcje z useState setIsSidebarOpen ustawiajac true
+
+```jsx
+<Nav onClickShoppingBtn={() => setIsSidebarOpen(true)} />
+```
+
+- props onClickShoppingBtn odbieramy w Nav.jsx i ustawiamy na onClick na Cart Button
+
+```jsx
+export function Nav({ onClickShoppingBtn }) {
+  ...
+  return (
+    <nav className="relative z-10 flex flex-wrap items-center justify-between">
+      ...
+      {/* Cart Button */}
+      <div
+        onClick={onClickShoppingBtn}
+        className="btn-press-anim fixed bottom-4 left-4 lg:static lg:mr-8"
+      >
+        <div className="flex-center h-12 w-12 cursor-pointer rounded-full bg-white shadow-md">
+          <TbShoppingBag />
+        </div>
+      </div>
+    </nav>
+  );
+}
+```
+
+- i to true ustawione w useState na isSidebarOpen trzeba jeszcze przeslac do Sidebar poprzez props isOpen
+
+```jsx
+<Sidebar isOpen={isSidebarOpen} />
+```
+
+Chowanie
+
+- tak samo trzeba na funkcje z useState (setIsSidebarOpen) wyslac do Sidebara z wartoscia false przez props onClickClose
+
+```jsx
+<Sidebar isOpen={isSidebarOpen} onClickClose={() => setIsSidebarOpen(false)} />
+```
+
+- odebrac ten props w Sidebar.jsx i przypisac przez onClick do buttona X
+
+```jsx
+<button
+  onClick={onClickClose}
+  className="absolute right-4 top-4 p-2 font-bold text-black"
+>
+  X
+</button>
+```
+
+Sidebar moze dostawac children i odbierac je w props i wyswietlac
+
+```jsx
+<Sidebar isOpen={isSidebarOpen} onClickClose={() => setIsSidebarOpen(false)}>
+  cokolwiek jako children
+</Sidebar>;
+
+export function Sidebar({ children, isOpen, onClickClose }) {
+  return (
+    <div
+      className={`fixed left-0 top-0 z-50 h-full w-full transform bg-white p-5 transition duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+    >
+      ...
+      {children}
+    </div>
+  );
+}
+```
+
+na desktop zachodzi na calosc mozemy to ograniczyc przez **md:w-[50%] lg:w-[35%]**
+
+- stworzyc trzeba jeszcze takiego diva overlay zeby nie mozna bylo kliknac pod sidebarem
+  w divie container jest div z sidebarem i div overlay
+
+```jsx
+export function Sidebar({ children, isOpen, onClickClose }) {
+  return (
+    <div>
+      <div
+        className={`fixed right-0 top-0 z-50 h-full w-full transform bg-white p-5 shadow-lg transition duration-300 md:w-[50%] lg:w-[35%] ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+      >
+        ...
+      </div>
+
+      <div className="fixed left-0 top-0 z-20 h-full w-full bg-black opacity-50" />
+    </div>
+  );
+}
+```
+
+ale wyswietlamy tylko ten overlay jak sidebar jest otwarty
+
+```jsx
+{
+  isOpen && (
+    <div className="fixed left-0 top-0 z-20 h-full w-full bg-black opacity-50" />
+  );
+}
+```
