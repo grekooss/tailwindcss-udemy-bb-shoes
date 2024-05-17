@@ -711,3 +711,175 @@ ale wyswietlamy tylko ten overlay jak sidebar jest otwarty
   );
 }
 ```
+
+## CartItem.jsx
+
+przesyłamy do SideBar jako children h2 + CartItem:
+
+```jsx
+<Sidebar isOpen={isSidebarOpen} onClickClose={() => setIsSidebarOpen(false)}>
+  <h2 className="mb-10 text-2xl font-bold">Cart</h2>
+  <CartItem item={SHOE_LIST[0]} />
+  <CartItem item={SHOE_LIST[1]} />
+  <CartItem item={SHOE_LIST[2]} />
+</Sidebar>
+```
+
+a CartItem tworzymy:
+
+```jsx
+export function CartItem({ item }) {
+  return (
+    <div>
+      <img className="h-24" src={item.src} />
+      <div>{item.title}</div>
+      <div>{item.description}</div>
+      <div>{item.price}</div>
+    </div>
+  );
+}
+```
+
+nie możemy scroolowac Sidebar wiec trzeba dodac **overflow-y-auto** :
+
+```jsx
+export function Sidebar({ children, isOpen, onClickClose }) {
+  return (
+    <div>
+      <div
+        className={`fixed right-0 top-0 z-50 h-full w-full transform overflow-y-auto bg-white p-5 shadow-lg transition duration-300 md:w-[50%] lg:w-[35%] ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+      >
+      ...
+    </div>
+  );
+}
+```
+
+docelowo mamy taki CartItem:
+title i description wrappujemy w diva zeby wyswietlaly sie pod soba
+
+```jsx
+export function CartItem({ item }) {
+  return (
+    <div className="flex cursor-pointer space-x-2 bg-gray-50 p-2 hover:bg-[#DAFFA2]">
+      <img className="h-24" src={item.src} />
+      <div className="space-y-2">
+        <div className="font-bold">{item.title}</div>
+        <div className="text-sm text-gray-400">{item.description}</div>
+      </div>
+      <div className="font-bold">{item.price}$</div>
+    </div>
+  );
+}
+```
+
+dodajemy QTY i SIZE oraz ikone kosza (button):
+wrapujemy to co poprzednio w diva a nowe rzeczy w osobnego diva:
+
+```jsx
+import { CiTrash } from "react-icons/ci";
+import { QTYS, SIZES } from "../constant";
+import { Select } from "./Select";
+
+export function CartItem({ item }) {
+  return (
+    <div className="cursor-pointer space-y-2 bg-gray-50 p-2 hover:bg-[#DAFFA2]">
+      <div className="flex space-x-2 ">
+        <img className="h-24" src={item.src} />
+        <div className="space-y-2">
+          <div className="font-bold">{item.title}</div>
+          <div className="text-sm text-gray-400">{item.description}</div>
+        </div>
+        <div className="font-bold">{item.price}$</div>
+      </div>
+      <div className="flex justify-between pl-32">
+        <div className="flex space-x-6">
+          <div>
+            <div className="font-bold">SIZE</div>
+            <Select options={SIZES} />
+          </div>
+          <div>
+            <div className="font-bold">QTY</div>
+            <Select options={QTYS} />
+          </div>
+        </div>
+        <button>
+          <CiTrash className="text-black" size={25} />
+        </button>
+      </div>
+    </div>
+  );
+}
+```
+
+#### twMerge
+
+aby zmienic QTY i SIZE na mniejsze mozemy przeslac jako props className do Select-a:
+
+```jsx
+<Select options={QTYS} className={"w-16 p-1"} />
+```
+
+i tam odebrac i wpisac gdzie chcemy ale musimy zrobic przez tailwind-marge zeby nadpisywalo CSS bo niektore sa silniejsze (jak mamy takie same np px-2 silniejsze niz p-2) nawet jak jest na koncu:
+
+- npm i tw-merge
+
+```jsx
+import { IoIosArrowDown } from "react-icons/io";
+import { twMerge } from "tw-merge";
+
+export function Select({ title, options, className }) {
+  return (
+    <div className="relative">
+      <select
+        defaultValue=""
+        className={twMerge(
+          `w-24 appearance-none border border-gray-300 bg-white p-4 ${className}`,
+        )}
+      >
+      ...
+    </div>
+  );
+}
+```
+
+## Cart.jsx
+
+tworzymy komponent i dajemy do App jako children Sidebar-a:
+
+```jsx
+<Sidebar isOpen={isSidebarOpen} onClickClose={() => setIsSidebarOpen(false)}>
+  <Cart cartItems={FAKE_CART_ITEMS} />
+</Sidebar>
+```
+
+przesylamy do niego FAKE_CART_ITEMS:
+
+```jsx
+const FAKE_CART_ITEMS = SHOE_LIST.map((shoe) => {
+  return {
+    product: shoe,
+    qty: 1,
+    size: 40,
+  };
+});
+```
+
+```jsx
+import { CartItem } from "./CartItem";
+
+export function Cart({ cartItems }) {
+  return (
+    <div>
+      <h2 className="mb-5 text-4xl font-bold">Cart</h2>
+      <ul>
+        {cartItems.map((cartItem) => (
+          <li key={cartItem.product.id}>
+            <CartItem item={cartItem.product} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
