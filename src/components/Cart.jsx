@@ -7,7 +7,7 @@ export function Cart({ cartItems }) {
       <ul className="space-y-5">
         {cartItems.map((cartItem) => (
           <li key={cartItem.product.id}>
-            <CartItem item={cartItem.product} />
+            <CartItem item={cartItem} />
           </li>
         ))}
       </ul>

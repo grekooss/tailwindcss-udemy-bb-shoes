@@ -860,7 +860,7 @@ const FAKE_CART_ITEMS = SHOE_LIST.map((shoe) => {
   return {
     product: shoe,
     qty: 1,
-    size: 40,
+    size: 44,
   };
 });
 ```
@@ -872,10 +872,10 @@ export function Cart({ cartItems }) {
   return (
     <div>
       <h2 className="mb-5 text-4xl font-bold">Cart</h2>
-      <ul>
+      <ul className="space-y-5">
         {cartItems.map((cartItem) => (
           <li key={cartItem.product.id}>
-            <CartItem item={cartItem.product} />
+            <CartItem item={cartItem} />
           </li>
         ))}
       </ul>
@@ -883,3 +883,79 @@ export function Cart({ cartItems }) {
   );
 }
 ```
+
+teraz mamy zagnizezdzone JSON (shoe) w fake-table pod product wiec musimy zmienic w CartItem.jsx odbieranie props i odwolywac sie nie item a pruduct a do Select mozemy teraz przeslac defaultValue (qty i size) z fake-table:
+
+```jsx
+export function CartItem({ item: { product, qty, size } }) {
+  return (
+    <div className="cursor-pointer space-y-2 bg-gray-50 p-2 hover:bg-[#DAFFA2]">
+      <div className="flex space-x-2 ">
+        <img className="h-24" src={product.src} />
+        <div className="space-y-2">
+          <div className="font-bold">{product.title}</div>
+          <div className="text-sm text-gray-400">{product.description}</div>
+        </div>
+        <div className="font-bold">{product.price}$</div>
+      </div>
+      <div className="flex justify-between pl-32">
+        <div className="flex space-x-6">
+          <div>
+            <div className="font-bold">SIZE</div>
+            <Select
+              defaultValue={size}
+              options={SIZES}
+              className={"w-16 p-1 pl-2"}
+            />
+          </div>
+          <div>
+            <div className="font-bold">QTY</div>
+            <Select
+              defaultValue={qty}
+              options={QTYS}
+              className={"w-16 p-1 pl-2"}
+            />
+          </div>
+        </div>
+        <button>
+          <CiTrash className="text-black" size={25} />
+        </button>
+      </div>
+    </div>
+  );
+}
+```
+
+i trzeba to zmienic jeszcze w Select:
+
+```jsx
+export function Select({ title, options, className, defaultValue }) {
+  return (
+    <div className="relative">
+      <select
+        defaultValue={defaultValue || ""}
+        className={twMerge(
+          `w-24 appearance-none border border-gray-300 bg-white p-4 ${className}`,
+        )}
+      >
+        <option value="" disabled hidden>
+          {title}
+        </option>
+        {options.map((option) => (
+          <option value={option} key={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+      <div className="flex-center pointer-events-none absolute inset-y-0 right-0 pr-3">
+        <IoIosArrowDown />
+      </div>
+    </div>
+  );
+}
+```
+
+## Dark Mode
+
+- tworzymy button w divie a komponencie App.jsx (toggle na darkmode i lightmode)
+- stylujemy go **fixed bottom-4 right-4**

@@ -10,7 +10,7 @@ const FAKE_CART_ITEMS = SHOE_LIST.map((shoe) => {
   return {
     product: shoe,
     qty: 1,
-    size: 40,
+    size: 44,
   };
 });
 
