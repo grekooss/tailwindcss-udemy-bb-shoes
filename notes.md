@@ -959,3 +959,92 @@ export function Select({ title, options, className, defaultValue }) {
 
 - tworzymy button w divie a komponencie App.jsx (toggle na darkmode i lightmode)
 - stylujemy go **fixed bottom-4 right-4**
+
+```jsx
+<div className="fixed bottom-4 right-4">
+  <button className="bg-night-50 dark:text-night rounded-full px-4 py-2 text-white dark:bg-white">
+    <BiSun className="hidden dark:block" />
+    <BiMoon className="dark:hidden" />
+  </button>
+</div>
+```
+
+- dodanie koloru w tailwind.config.js
+
+```js
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        night: {
+          DEFAULT: "#0D1120",
+          50: "#171E2C",
+          500: "#0D1120",
+        },
+      },
+    ...
+    },
+  },
+  plugins: [],
+};
+```
+
+- dodanie darkMode poprzez parametr class w opcjach tailwind.config.js
+
+```js
+export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  darkMode: "class",
+  theme: {
+    extend: {
+      ...
+  plugins: [],
+};
+```
+
+- tworzymy funkcje w App.jsx do toglowania trybu dark:
+
+```jsx
+const toggleDarkMode = () => {
+  window.document.documentElement.classList.toggle("dark");
+};
+```
+
+i przypinamy na onClick na buttonie:
+
+```jsx
+<div className="fixed bottom-4 right-4">
+  <button
+    onClick={toggleDarkMode}
+    className="bg-night-50 dark:text-night rounded-full px-4 py-2 text-white dark:bg-white"
+  >
+    ...
+  </button>
+</div>
+```
+
+- zapisujemy stan darkMode w pamieci
+
+```jsx
+const toggleDarkMode = () => {
+  window.document.documentElement.classList.toggle("dark");
+
+  localStorage.setItem(
+    "isDarkMode",
+    window.document.documentElement.classList.contains("dark"),
+  );
+};
+```
+
+- trzeba jeszcze sprawdzic na poczatku (zeby odswiezenie nie psulo dark) czy jest darkMode - robimy to prez useEffect():
+
+```jsx
+useEffect(() => {
+  const isDarkMode = localStorage.getItem("isDarkMode");
+  if (isDarkMode === "true") {
+    window.document.documentElement.classList.add("dark");
+  }
+});
+```
