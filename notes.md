@@ -1063,3 +1063,8 @@ stylujemy wszystkie elementy na tryb dark:
 - menu list w lg **lg:dark:text-white**
 - hamburger icon **dark:text-gray-400 dark:hover:bg-gray-700**
   itd. rozne elementy
+
+## Deploy on GitHub Pages
+
+https://www.vd-developer.online/blog/vite-react-deploy-github
+https://www.youtube.com/watch?v=Bk28snjHr7c
