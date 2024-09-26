@@ -44,6 +44,15 @@ export function App() {
     }
   };
 
+  const removeFromCart = (productId) => {
+    const updatedCartItems = [...cartItems];
+    const existingItemIndex = cartItems.findIndex(
+      (item) => item.product.id === productId,
+    );
+    updatedCartItems.splice(existingItemIndex, 1);
+    setCartItems(updatedCartItems);
+  };
+
   return (
     <div className="animate-fadeIn p-10 dark:bg-night xl:px-24">
       <Nav onClickShoppingBtn={() => setIsSidebarOpen(true)} />
@@ -53,7 +62,7 @@ export function App() {
         isOpen={isSidebarOpen}
         onClickClose={() => setIsSidebarOpen(false)}
       >
-        <Cart cartItems={cartItems} />
+        <Cart cartItems={cartItems} onClickTrash={removeFromCart} />
       </Sidebar>
       <div className="fixed bottom-4 right-4">
         <button
