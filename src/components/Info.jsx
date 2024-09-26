@@ -1,6 +1,7 @@
-export function Info({ item }) {
+export function Info({ item, onClick }) {
   return (
     <div
+      onClick={() => onClick(item)}
       className={`${item.className} max-w-xl transform cursor-pointer transition hover:scale-105`}
     >
       <div className="p-8">

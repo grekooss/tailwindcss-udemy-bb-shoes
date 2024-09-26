@@ -17,19 +17,11 @@ export function CartItem({ item: { product, qty, size } }) {
         <div className="flex space-x-6">
           <div>
             <div className="font-bold">SIZE</div>
-            <Select
-              defaultValue={size}
-              options={SIZES}
-              className={"w-16 p-1 pl-2"}
-            />
+            <Select value={size} options={SIZES} className={"w-16 p-1 pl-2"} />
           </div>
           <div>
             <div className="font-bold">QTY</div>
-            <Select
-              defaultValue={qty}
-              options={QTYS}
-              className={"w-16 p-1 pl-2"}
-            />
+            <Select value={qty} options={QTYS} className={"w-16 p-1 pl-2"} />
           </div>
         </div>
         <button>
